@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyber-Hygiene Interactive Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <h1>Cyber-Hygiene Interactive Simulator</h1>
+    <p class="subtitle">Portfolio Edition: Interactive Digital Equity Tool</p>
+  </header>
+
+  <main class="main-container">
+    <!-- Left: Simulator Area -->
+    <section class="simulator-panel">
+      <div class="control-bar">
+        <button id="prev-btn" disabled>← Previous Scenario</button>
+        <h2 id="scenario-title">Scenario Title</h2>
+        <button id="next-btn">Next Scenario →</button>
+      </div>
+
+      <!-- Simulated Screen Window Wrapper -->
+      <div id="device-screen" class="device-screen email-mode">
+        <div id="screen-header" class="screen-header">Device Header</div>
+        
+        <div class="metadata-pane">
+          <div><strong>From:</strong> <span id="meta-from"></span></div>
+          <div id="meta-subject-row"><strong>Subject:</strong> <span id="meta-subject"></span></div>
+        </div>
+
+        <div id="message-content" class="message-content">
+          <!-- Dynamic Text with interactive flag spans injected here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Educational Feedback Panel -->
+    <section class="feedback-panel" aria-live="polite">
+      <div class="score-card">
+        <h3>Threat Tracker</h3>
+        <p>Flags Found: <strong id="score-counter">0 / 3</strong></p>
+        <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+      </div>
+
+      <div class="explanations-container">
+        <h3>Discovered Indicators</h3>
+        <div id="explanations-list" class="explanations-list">
+          <p class="placeholder-text">Scan the simulated communication on the left. Click on areas that look suspicious to identify cyber threat indicators.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="scenarios.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
