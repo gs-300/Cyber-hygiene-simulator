@@ -180,3 +180,43 @@ body {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+.analytics-card {
+  background: var(--panel-bg);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-top: 10px;
+}
+
+.analytics-list {
+  list-style: none;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 15px 0;
+  padding-right: 5px;
+}
+
+.analytics-item {
+  font-size: 0.85rem;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border-color);
+  display: flex;
+  justify-content: space-between;
+}
+
+.analytics-item:last-child { border-bottom: none; }
+
+.secondary-btn {
+  background: #e2e8f0;
+  color: #4a5568;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.secondary-btn:hover { background: #cbd5e0; }

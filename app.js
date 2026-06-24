@@ -2,6 +2,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   let currentIndex = 0;
   let discoveredFlags = new Set();
+  let startTime = null;
+
+  // New DOM Elements for Analytics
+  const analyticsList = document.getElementById("analytics-list");
+  const clearDataBtn = document.getElementById("clear-data-btn");
   const totalFlagsPerScenario = 3;
 
   // DOM Declarations
@@ -60,6 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update global layout navigation control rules
     prevBtn.disabled = index === 0;
     nextBtn.disabled = index === scenarios.length - 1;
+
+    // Start the senario timer
+    startTime = Date.now();
   }
 
   function handleFlagInteraction(event) {
@@ -99,6 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
       victoryAlert.style.borderColor = "var(--accent-blue)";
       victoryAlert.innerHTML = `<p><strong>Excellent Analysis!</strong> You have successfully uncovered all critical vulnerabilities within this context wrapper.</p>`;
       explanationsList.appendChild(victoryAlert);
+
+      // TRIGGER TELEMETRY SAVE HERE
+      saveTelemetry(scenarios[currentIndex].title, discoveredFlags.size);
     }
   }
 
@@ -119,4 +130,60 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Seed baseline system configuration values initially
   initScenario(currentIndex);
+
+  function saveTelemetry(scenarioTitle, flagsFound) {
+    const endTime = Date.now();
+    const timeSpentSeconds = Math.round((endTime - startTime) / 1000);
+    
+    // 1. Fetch old logs or initialize empty array
+    let logs = JSON.parse(localStorage.getItem("cyberSimTelemetry")) || [];
+    
+    // 2. Build the new record entry
+    const newLog = {
+      scenario: scenarioTitle,
+      score: `${flagsFound}/3`,
+      duration: `${timeSpentSeconds}s`,
+      date: new Date().toLocaleDateString()
+    };
+    
+    // 3. Save it back to the browser
+    logs.push(newLog);
+    localStorage.setItem("cyberSimTelemetry", JSON.stringify(logs));
+    
+    // 4. Instantly refresh the display dashboard
+    renderAnalytics();
+  }
+
+  function renderAnalytics() {
+    let logs = JSON.parse(localStorage.getItem("cyberSimTelemetry")) || [];
+    
+    if (logs.length === 0) {
+      analyticsList.innerHTML = `<li class="placeholder-text">Complete a scenario to log your performance.</li>`;
+      return;
+    }
+    
+    // Loop through logs and build HTML items
+    analyticsList.innerHTML = logs.map(log => `
+      <li class="analytics-item">
+        <span><strong>${log.scenario}</strong> (${log.date})</span>
+        <span>Score: ${log.score} | Time: ${log.duration}</span>
+      </li>
+    `).join("");
+  }
+
+  // Clear data event listener
+  clearDataBtn.addEventListener("click", () => {
+    if (confirm("Are you sure you want to delete all local performance logs?")) {
+      localStorage.removeItem("cyberSimTelemetry");
+      renderAnalytics();
+    }
+  });
+
+  // --- Initial Launch Commands ---
+
+  // 1. Load the first scenario game screen
+  initScenario(currentIndex);
+
+  // 2. Read and print any historical performance metrics already stored in this browser
+  renderAnalytics();
 });
