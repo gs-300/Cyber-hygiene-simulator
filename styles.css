@@ -1,222 +1,388 @@
+/* ==========================================================================
+   1. GLOBAL VARIABLES & BASE RESETS
+   ========================================================================== */
 :root {
-  --bg-primary: #f4f6f9;
+  --bg-main: #f8fafc;
   --panel-bg: #ffffff;
-  --text-main: #2d3748;
-  --border-color: #cbd5e0;
-  --accent-blue: #3182ce;
-  --success-green: #38a169;
-  --alert-yellow: #fefcbf;
-  --alert-border: #ecc94b;
+  --text-main: #1e293b;
+  --text-subtitle: #64748b;
+  --border-color: #cbd5e1;
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --accent-blue-light: #eff6ff;
+  --success-green: #16a34a;
+  --sms-bg: #e2e8f0;
+  --sms-text: #0f172a;
+  --flag-hover: rgba(234, 179, 8, 0.15);
+  --flag-found-bg: rgba(22, 163, 74, 0.1);
+  --flag-found-border: #16a34a;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-main);
   color: var(--text-main);
   line-height: 1.6;
   padding: 20px;
 }
 
+/* ==========================================================================
+   2. APP HEADER & LANGUAGE DROPDOWN
+   ========================================================================== */
 .app-header {
-  text-align: center;
   margin-bottom: 30px;
-}
-.subtitle { color: #718096; font-size: 0.95rem; margin-top: 4px; }
-
-.main-container {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
 }
 
-@media (max-width: 900px) {
-  .main-container { grid-template-columns: 1fr; }
-}
-
-/* Simulator Formatting */
-.simulator-panel {
-  display: flex;
-  flex-direction: column;
-}
-
-.control-bar {
+.header-main-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--panel-bg);
-  padding: 12px;
-  border-radius: 8px 8px 0 0;
-  border: 1px solid var(--border-color);
-}
-
-.control-bar button {
-  background: var(--accent-blue);
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 600;
-}
-.control-bar button:disabled { background: var(--border-color); cursor: not-allowed; }
-.control-bar h2 { font-size: 1.1rem; }
-
-/* Mock Client Skins */
-.device-screen {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-top: none;
-  min-height: 450px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.device-screen.email-mode { font-family: Arial, sans-serif; }
-.device-screen.sms-mode {
-  background-color: #e5ddd5;
-  max-width: 480px;
+  flex-wrap: wrap;
+  gap: 15px;
+  max-width: 1400px;
   margin: 0 auto;
-  width: 100%;
-  border-top: 1px solid var(--border-color);
 }
 
-.screen-header {
-  background: #edf2f7;
+.app-header h1 {
+  font-size: 1.75rem;
+  color: var(--text-main);
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--text-subtitle);
+  margin-top: 5px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.language-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.lang-selector {
   padding: 8px 12px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  color: #4a5568;
-}
-
-.metadata-pane {
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 12px;
-  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--panel-bg);
+  color: var(--text-main);
   font-size: 0.9rem;
-}
-
-.message-content { padding: 10px 5px; }
-
-/* Game Engine Elements */
-.flag-target {
+  font-weight: 600;
   cursor: pointer;
-  background-color: transparent;
-  transition: background-color 0.2s ease;
-  border-bottom: 1px dashed transparent;
-  color: inherit;
-  text-decoration: none;
-}
-.flag-target:hover { border-bottom-color: var(--text-main); }
-.flag-target:focus { outline: 2px solid var(--accent-blue); }
-
-.flag-target.found {
-  background-color: var(--alert-yellow);
-  border: 1px dashed var(--alert-border);
-  padding: 2px 4px;
-  border-radius: 4px;
-  cursor: default;
-  pointer-events: none;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-/* SMS UI Overrides */
-.sms-bubble {
-  background: white;
-  padding: 12px;
-  border-radius: 8px;
-  max-width: 85%;
-  position: relative;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+.lang-selector:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
-.sms-bubble p { margin-bottom: 8px; }
 
-/* Sidebar Layout */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ==========================================================================
+   3. MAIN WORKSPACE GRID LAYOUT
+   ========================================================================== */
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 25px;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* Left Workspace Panel */
+.simulator-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Right Workspace Panel */
 .feedback-panel {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.score-card, .explanations-container {
-  background: var(--panel-bg);
-  padding: 20px;
-  border-radius: 8px;
+/* ==========================================================================
+   4. NAVIGATION CONTROL BAR
+   ========================================================================== */
+.control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.control-bar h2 {
+  font-size: 1.2rem;
+  text-align: center;
+  flex: 1;
+}
+
+button {
+  padding: 10px 16px;
+  border-radius: 6px;
   border: 1px solid var(--border-color);
+  background-color: var(--panel-bg);
+  color: var(--text-main);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
-.progress-bar {
-  background: #edf2f7;
-  height: 10px;
-  border-radius: 5px;
+button:hover:not(:disabled) {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#clear-data-btn {
+  width: 100%;
   margin-top: 10px;
-  overflow: hidden;
-}
-.progress-fill {
-  background: var(--success-green);
-  width: 0%;
-  height: 100%;
-  transition: width 0.3s ease;
+  color: #dc2626;
+  border-color: #fca5a5;
 }
 
-.placeholder-text { color: #718096; font-style: italic; font-size: 0.95rem; }
+#clear-data-btn:hover {
+  background-color: #fef2f2;
+}
+
+/* ==========================================================================
+   5. SIMULATED DEVICE FRAMEWORK (EMAIL / SMS)
+   ========================================================================== */
+.device-screen {
+  border: 2px solid #94a3b8;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.screen-header {
+  background: #475569;
+  color: #ffffff;
+  padding: 10px 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.metadata-pane {
+  background: #f1f5f9;
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+}
+
+.metadata-pane div {
+  margin-bottom: 4px;
+}
+
+.metadata-pane div:last-child {
+  margin-bottom: 0;
+}
+
+.message-content {
+  padding: 25px;
+  min-height: 250px;
+}
+
+/* SMS Theme Custom Overrides */
+.sms-mode {
+  max-width: 450px;
+  margin: 0 auto;
+  border-radius: 20px;
+}
+
+.sms-mode .message-content {
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+.sms-bubble {
+  background-color: var(--sms-bg);
+  color: var(--sms-text);
+  padding: 14px 18px;
+  border-radius: 18px;
+  max-width: 85%;
+  align-self: flex-start;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.sms-bubble p {
+  margin-bottom: 8px;
+}
+
+.sms-bubble p:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   6. INTERACTIVE THREAT VULNERABILITY FLAGS
+   ========================================================================== */
+.flag-target {
+  position: relative;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+
+.flag-target:hover {
+  background-color: var(--flag-hover);
+  box-shadow: 0 0 0 2px #f59e0b;
+}
+
+.flag-target:focus-visible {
+  box-shadow: 0 0 0 3px #2563eb;
+}
+
+/* Found / Revealed Vulnerability State */
+.flag-target.found {
+  background-color: var(--flag-found-bg) !important;
+  box-shadow: 0 0 0 2px var(--flag-found-border) !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+.link-mock {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   7. TRACKER, CARDS & PERFORMANCE PANELS
+   ========================================================================== */
+.score-card, .explanations-container, .analytics-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.score-card h3, .explanations-container h3, .analytics-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+/* Graphical Progress Bar Component */
+.progress-bar {
+  background-color: #e2e8f0;
+  height: 12px;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  background-color: var(--success-green);
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease-out;
+}
+
+/* Dynamic Explanation Alerts */
+.explanations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .explanation-item {
-  background: #f7fafc;
-  border-left: 4px solid var(--success-green);
+  background-color: #fafafa;
+  border-left: 4px solid #f59e0b;
   padding: 12px;
-  margin-top: 12px;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9rem;
   animation: slideIn 0.25s ease-out;
 }
-.explanation-item p { font-size: 0.9rem; }
 
+.placeholder-text {
+  color: var(--text-subtitle);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Historical Analytics Feed Dashboard */
+.analytics-list {
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analytics-item {
+  padding: 10px;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* ==========================================================================
+   8. ANIMATIONS & RESPONSIVE DESIGN MEDIA QUERIES
+   ========================================================================== */
 @keyframes slideIn {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.analytics-card {
-  background: var(--panel-bg);
-  padding: 20px;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  margin-top: 10px;
+@media (max-width: 900px) {
+  .main-container {
+    grid-template-columns: 1fr;
+  }
 }
 
-.analytics-list {
-  list-style: none;
-  max-height: 150px;
-  overflow-y: auto;
-  margin: 15px 0;
-  padding-right: 5px;
+@media (max-width: 600px) {
+  .header-main-row {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .control-bar {
+    flex-direction: column;
+  }
+  
+  .control-bar h2 {
+    order: -1;
+  }
+  
+  button {
+    width: 100%;
+  }
 }
-
-.analytics-item {
-  font-size: 0.85rem;
-  padding: 6px 0;
-  border-bottom: 1px dashed var(--border-color);
-  display: flex;
-  justify-content: space-between;
-}
-
-.analytics-item:last-child { border-bottom: none; }
-
-.secondary-btn {
-  background: #e2e8f0;
-  color: #4a5568;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-
-.secondary-btn:hover { background: #cbd5e0; }

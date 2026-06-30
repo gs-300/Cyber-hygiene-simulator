@@ -9,17 +9,26 @@
 <body>
 
   <header class="app-header">
-    <h1>Cyber-Hygiene Interactive Simulator</h1>
-    <p class="subtitle">Portfolio Edition: Interactive Digital Equity Tool</p>
+    <div class="header-main-row">
+      <h1 data-i18n="appTitle">Cyber-Hygiene Interactive Simulator</h1>
+      <div class="language-wrapper">
+        <label for="lang-selector" class="sr-only">Language / Idioma:</label>
+        <select id="lang-selector" class="lang-selector">
+          <option value="en" selected>English</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+    </div>
+    <p class="subtitle" data-i18n="portfolioSubtitle">Portfolio Edition: Interactive Digital Equity Tool</p>
   </header>
 
   <main class="main-container">
     <!-- Left: Simulator Area -->
     <section class="simulator-panel">
       <div class="control-bar">
-        <button id="prev-btn" disabled>← Previous Scenario</button>
+        <button id="prev-btn" data-i18n="prevBtn" disabled>← Previous Scenario</button>
         <h2 id="scenario-title">Scenario Title</h2>
-        <button id="next-btn">Next Scenario →</button>
+        <button id="next-btn" data-i18n="nextBtn">Next Scenario →</button>
       </div>
 
       <!-- Simulated Screen Window Wrapper -->
@@ -27,8 +36,8 @@
         <div id="screen-header" class="screen-header">Device Header</div>
         
         <div class="metadata-pane">
-          <div><strong>From:</strong> <span id="meta-from"></span></div>
-          <div id="meta-subject-row"><strong>Subject:</strong> <span id="meta-subject"></span></div>
+          <div><strong data-i18n="metaFromLabel">From:</strong> <span id="meta-from"></span></div>
+          <div id="meta-subject-row"><strong data-i18n="metaSubjectLabel">Subject:</strong> <span id="meta-subject"></span></div>
         </div>
 
         <div id="message-content" class="message-content">
@@ -40,25 +49,25 @@
     <!-- Right: Educational Feedback Panel -->
     <section class="feedback-panel" aria-live="polite">
       <div class="score-card">
-        <h3>Threat Tracker</h3>
-        <p>Flags Found: <strong id="score-counter">0 / 3</strong></p>
+        <h3 data-i18n="trackerTitle">Threat Tracker</h3>
+        <p><span data-i18n="flagsFound">Flags Found:</span> <strong id="score-counter">0 / 3</strong></p>
         <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
       </div>
 
       <div class="explanations-container">
-        <h3>Discovered Indicators</h3>
+        <h3 data-i18n="discoveredIndicators">Discovered Indicators</h3>
         <div id="explanations-list" class="explanations-list">
-          <p class="placeholder-text">Scan the simulated communication on the left. Click on areas that look suspicious to identify cyber threat indicators.</p>
+          <p class="placeholder-text" data-i18n="defaultPlaceholder">Scan the simulated communication on the left. Click on areas that look suspicious to identify cyber threat indicators.</p>
         </div>
       </div>
 
       <div class="analytics-card">
-        <h3>Your Training History</h3>
-        <p class="subtitle">Stored locally in your browers's secure context</p>
+        <h3 data-i18n="historyTitle">Your Training History</h3>
+        <p class="subtitle" data-i18n="historySubtitle">Stored locally in your browser's secure context</p>
         <ul id="analytics-list" class="analytics-list">
-          <li class="placeholder-text">Complete a scenario to log your performance.</li>
+          <li class="placeholder-text" data-i18n="logPlaceholder">Complete a scenario to log your performance.</li>
         </ul>
-        <button id="clear-data-btn" class="secondary-btn">Clear Logs</button>
+        <button id="clear-data-btn" class="secondary-btn" data-i18n="clearLogs">Clear Logs</button>
       </div>
     </section>
   </main>
